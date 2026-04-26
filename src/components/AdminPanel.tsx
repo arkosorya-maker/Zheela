@@ -128,7 +128,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ currentLang }) => {
         content: customContent
       });
       if (error) throw error;
-      alert('Content saved successfully! Reload the page to see changes.');
+      alert('Content saved successfully!');
+      window.location.reload();
     } catch (error: any) {
       alert(error.message);
     }
