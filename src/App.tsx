@@ -106,10 +106,50 @@ export default function App() {
     }
   }, [lang, isRtl]);
 
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.page) {
+        setCurrentPage(event.state.page);
+      } else {
+        const path = window.location.pathname.replace('/', '');
+        const validPages = ['home', 'services', 'books', 'consulting', 'courses', 'faq', 'certificates', 'contact', 'admin'];
+        if (validPages.includes(path)) {
+           setCurrentPage(path as any);
+        } else {
+           setCurrentPage('home');
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    // Initial load history state sync
+    const path = window.location.pathname.replace('/', '');
+    const validPages = ['home', 'services', 'books', 'consulting', 'courses', 'faq', 'certificates', 'contact', 'admin'];
+    const initialPage = validPages.includes(path) ? path : 'home';
+    
+    // Check if state is null, if so replaceState
+    if (!window.history.state || !window.history.state.page) {
+      window.history.replaceState({ page: initialPage }, '', path === '' ? '/' : `/${path}`);
+    }
+    
+    if (initialPage !== 'home') {
+       setCurrentPage(initialPage as any);
+    }
+
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   const navigateTo = (page: typeof currentPage) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsMenuOpen(false);
+    
+    if (page === 'home') {
+       window.history.pushState({ page: 'home' }, '', '/');
+    } else {
+       window.history.pushState({ page }, '', `/${page}`);
+    }
   };
 
   const navItems = [
