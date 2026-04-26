@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Cairo", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-primary-50: #faf5ff;
+  --color-primary-100: #f3e8ff;
+  --color-primary-200: #e9d5ff;
+  --color-primary-300: #d8b4fe;
+  --color-primary-400: #c084fc;
+  --color-primary-500: #a855f7;
+  --color-primary-600: #9333ea;
+  --color-primary-700: #7e22ce;
+  --color-primary-800: #6b21a8;
+  --color-primary-900: #581c87;
+}
+
+@layer utilities {
+  .neo-shadow {
+    box-shadow: 10px 10px 19px #d1d9e6, -10px -10px 19px #ffffff;
+  }
+  .neo-shadow-hover:hover {
+    box-shadow: 15px 15px 25px #d1d9e6, -15px -15px 25px #ffffff;
+    transform: translateY(-2px);
+  }
+  .neo-shadow-inner {
+    box-shadow: inset 10px 10px 19px #d1d9e6, inset -10px -10px 19px #ffffff;
+  }
+  .neo-btn {
+    box-shadow: 5px 5px 10px #d1d9e6, -5px -5px 10px #ffffff;
+  }
+  .neo-btn:hover {
+    box-shadow: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+    color: var(--color-primary-600);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #ecf0f3;
+    color: #3c3e41;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
