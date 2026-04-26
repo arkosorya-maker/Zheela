@@ -40,7 +40,14 @@ const NeoIconBtn: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 export default function App() {
-  const [lang, setLang] = useState<Language>('en');
+  const [lang, setLang] = useState<Language>(() => {
+    return (localStorage.getItem('preferred_language') as Language) || 'ku';
+  });
+
+  const handleSetLang = (newLang: Language) => {
+    setLang(newLang);
+    localStorage.setItem('preferred_language', newLang);
+  };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState<'home' | 'services' | 'books' | 'consulting' | 'courses' | 'faq' | 'certificates' | 'contact' | 'admin'>('home');
@@ -71,6 +78,7 @@ export default function App() {
   const t = {
     ...baseT,
     ...customT,
+    nav: { ...baseT.nav, ...(customT.nav || {}) },
     hero: { ...baseT.hero, ...(customT.hero || {}) },
     about: { ...baseT.about, ...(customT.about || {}) },
     services: { ...baseT.services, ...(customT.services || {}) },
@@ -80,6 +88,7 @@ export default function App() {
     faq: { ...baseT.faq, ...(customT.faq || {}) },
     certificates: { ...baseT.certificates, ...(customT.certificates || {}) },
     contact: { ...baseT.contact, ...(customT.contact || {}) },
+    common: { ...baseT.common, ...(customT.common || {}) },
   };
 
   const isRtl = lang === 'ar' || lang === 'ku';
@@ -123,7 +132,7 @@ export default function App() {
                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white neo-shadow">
                     <img src={profileImg} alt="Zheela" className="w-full h-full object-cover" />
                  </div>
-                 <span className="font-bold text-2xl tracking-tighter uppercase text-[#3c3e41] opacity-90 tracking-widest pl-2">Zheela</span>
+                 <span className="font-bold text-2xl tracking-tighter uppercase text-[#3c3e41] opacity-90 tracking-widest pl-2">{t.hero.name}</span>
               </div>
             </div>
 
@@ -133,9 +142,9 @@ export default function App() {
               </button>
               {/* Language Switcher */}
               <div className="flex bg-[#ecf0f3] neo-shadow-inner rounded-full p-1 ms-4 space-x-1 space-x-reverse">
-                <button onClick={() => setLang('en')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${lang === 'en' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-500 hover:text-primary-600'}`}>EN</button>
-                <button onClick={() => setLang('ku')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${lang === 'ku' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-500 hover:text-primary-600'}`}>KU</button>
-                <button onClick={() => setLang('ar')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${lang === 'ar' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-500 hover:text-primary-600'}`}>AR</button>
+                <button onClick={() => handleSetLang('en')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${lang === 'en' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-500 hover:text-primary-600'}`}>EN</button>
+                <button onClick={() => handleSetLang('ku')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${lang === 'ku' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-500 hover:text-primary-600'}`}>KU</button>
+                <button onClick={() => handleSetLang('ar')} className={`px-4 py-2 rounded-full text-xs font-bold uppercase transition-all ${lang === 'ar' ? 'bg-primary-600 text-white shadow-md' : 'text-slate-500 hover:text-primary-600'}`}>AR</button>
               </div>
               <NeoButton onClick={() => navigateTo('contact')} className="text-primary-600 font-bold whitespace-nowrap">
                 {t.nav.contact}
@@ -160,9 +169,9 @@ export default function App() {
             >
               <div className="px-6 pt-4 pb-8 space-y-4">
                  <div className="flex bg-[#ecf0f3] neo-shadow-inner rounded-xl p-2 justify-center mb-6 space-x-2 space-x-reverse">
-                   <button onClick={() => setLang('en')} className={`flex-1 py-3 rounded-lg text-sm font-bold uppercase transition-all ${lang === 'en' ? 'bg-primary-600 text-white' : 'text-slate-500'}`}>EN</button>
-                   <button onClick={() => setLang('ku')} className={`flex-1 py-3 rounded-lg text-sm font-bold uppercase transition-all ${lang === 'ku' ? 'bg-primary-600 text-white' : 'text-slate-500'}`}>KU</button>
-                   <button onClick={() => setLang('ar')} className={`flex-1 py-3 rounded-lg text-sm font-bold uppercase transition-all ${lang === 'ar' ? 'bg-primary-600 text-white' : 'text-slate-500'}`}>AR</button>
+                   <button onClick={() => handleSetLang('en')} className={`flex-1 py-3 rounded-lg text-sm font-bold uppercase transition-all ${lang === 'en' ? 'bg-primary-600 text-white' : 'text-slate-500'}`}>EN</button>
+                   <button onClick={() => handleSetLang('ku')} className={`flex-1 py-3 rounded-lg text-sm font-bold uppercase transition-all ${lang === 'ku' ? 'bg-primary-600 text-white' : 'text-slate-500'}`}>KU</button>
+                   <button onClick={() => handleSetLang('ar')} className={`flex-1 py-3 rounded-lg text-sm font-bold uppercase transition-all ${lang === 'ar' ? 'bg-primary-600 text-white' : 'text-slate-500'}`}>AR</button>
                  </div>
                 <button onClick={() => navigateTo('home')} className="block w-full text-start text-base font-bold text-slate-800 uppercase p-2">
                    {lang === 'en' ? 'Home' : (lang === 'ku' ? 'سەرەتا' : 'الرئيسية')}
@@ -213,7 +222,7 @@ export default function App() {
                   
                   <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-12 sm:gap-24">
                     <div>
-                      <span className="block text-xs uppercase tracking-[0.2em] text-[#1e2125] font-bold mb-6">Find with me</span>
+                      <span className="block text-xs uppercase tracking-[0.2em] text-[#1e2125] font-bold mb-6">{t.common.findWithMe}</span>
                       <div className="flex space-x-6 space-x-reverse justify-center lg:justify-start">
                         <NeoIconBtn><Facebook className="w-5 h-5" /></NeoIconBtn>
                         <NeoIconBtn><Instagram className="w-5 h-5" /></NeoIconBtn>
@@ -238,8 +247,8 @@ export default function App() {
               {/* What I Do Section */}
               <section className="pb-24">
                 <div className="text-center lg:text-start mb-16">
-                  <span className="text-primary-600 font-bold uppercase tracking-[0.2em] text-sm block mb-4">Features</span>
-                  <h2 className="text-5xl md:text-6xl font-bold text-[#1e2125]">What I Do</h2>
+                  <span className="text-primary-600 font-bold uppercase tracking-[0.2em] text-sm block mb-4">{t.common.features}</span>
+                  <h2 className="text-5xl md:text-6xl font-bold text-[#1e2125]">{t.common.whatIDo}</h2>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -346,7 +355,7 @@ export default function App() {
                             {t.books.items.map((book: any, idx: number) => (
                               <div key={idx} className="bg-[#ecf0f3] neo-shadow pb-6 rounded-2xl flex flex-col justify-start items-center text-center overflow-hidden">
                                  {book.image_url ? (
-                                    <div className="w-full aspect-[4/3] bg-gray-200 mb-6">
+                                    <div className="w-48 sm:w-56 aspect-[3/4] bg-gray-200 mt-8 mb-6 mx-auto rounded overflow-hidden shadow-lg border border-gray-100">
                                        <img src={book.image_url} alt={book.title} className="w-full h-full object-cover" />
                                     </div>
                                  ) : (
@@ -382,7 +391,7 @@ export default function App() {
                                        </li>
                                     ))}
                                  </ul>
-                                 <NeoButton className="w-full text-xs">Choose Plan</NeoButton>
+                                 <NeoButton className="w-full text-xs">{t.common.choosePlan}</NeoButton>
                               </div>
                             ))}
                          </div>
@@ -503,12 +512,12 @@ export default function App() {
                                     message: formData.get('message')
                                  });
 
-                                 if (btn) btn.textContent = t.contact.form?.submit || 'Sent!';
+                                 if (btn) btn.textContent = t.contact.form?.submit || t.common.sent;
                                  if (!res.error) {
-                                    alert('Message sent successfully!');
+                                    alert(t.common.messageSent);
                                     e.currentTarget.reset();
                                  } else {
-                                    alert('Failed to send message. Please check Supabase setup.');
+                                    alert(t.common.messageFailed);
                                     console.error(res.error);
                                  }
                               }}
@@ -547,7 +556,7 @@ export default function App() {
       {currentPage === 'home' && (
          <footer className="w-full text-center py-12 mt-12 border-t border-gray-300/30">
             <p className="text-slate-500 font-medium">
-               © {new Date().getFullYear()} Zheela. All rights reserved.
+               © {new Date().getFullYear()} Zheela. {t.common.allRightsReserved}
             </p>
          </footer>
       )}

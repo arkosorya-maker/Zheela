@@ -130,7 +130,15 @@ export const translations = {
       whatsapp: "Chat on WhatsApp"
     },
     common: {
-      information: "Information"
+      information: "Information",
+      features: "Features",
+      whatIDo: "What I Do",
+      choosePlan: "Choose Plan",
+      findWithMe: "Find with me",
+      allRightsReserved: "All rights reserved.",
+      sent: "Sent!",
+      messageSent: "Message sent successfully!",
+      messageFailed: "Failed to send message."
     }
   },
   ku: {
@@ -262,7 +270,15 @@ export const translations = {
       whatsapp: "چات لە واتساپ"
     },
     common: {
-      information: "زانیاری"
+      information: "زانیاری",
+      features: "تایبەتمەندییەکان",
+      whatIDo: "چ کارێک دەکەم",
+      choosePlan: "هەڵبژاردنی پلان",
+      findWithMe: "لەگەڵم بە",
+      allRightsReserved: "هەموو مافەکان پارێزراون.",
+      sent: "نێردرا!",
+      messageSent: "نامەکە بە سەرکەوتوویی نێردرا!",
+      messageFailed: "ناردنی نامەکە شکستی هێنا."
     }
   },
   ar: {
@@ -394,7 +410,15 @@ export const translations = {
       whatsapp: "دردش عبر واتساب"
     },
     common: {
-      information: "معلومات"
+      information: "معلومات",
+      features: "المميزات",
+      whatIDo: "ما أفعله",
+      choosePlan: "اختر خطة",
+      findWithMe: "تواصل معي",
+      allRightsReserved: "كل الحقوق محفوظة.",
+      sent: "تم الإرسال!",
+      messageSent: "تم إرسال الرسالة بنجاح!",
+      messageFailed: "فشل إرسال الرسالة."
     }
   }
 };
